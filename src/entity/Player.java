@@ -131,5 +131,5 @@ public class Player extends Entity{
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize,null);
 
     }
-
+ // https://www.youtube.com/watch?v=ugzxCcpoSdE
 }
