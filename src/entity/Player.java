@@ -3,9 +3,12 @@ package entity;
 import main.GamePanel;
 import main.Movement;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
+import javax.imageio.ImageIO;
 
 public class Player extends Entity{
 
@@ -23,15 +26,17 @@ public class Player extends Entity{
         try {
 
             // Change to IMAGE
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
-//            up1.ImageIO.read(getClass().getResourceAsStream("/player/___.png"));
+
+            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
+            up2 =ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
+            down1 =ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
+            down2=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
+            left1=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
+            left2=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
+            right1=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
+            right2=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
+            // This is calling the image from the player file ex package/filename
+
 
         }catch(IOException e){
             e.printStackTrace();
@@ -40,11 +45,12 @@ public class Player extends Entity{
 
     public void setDefaultValues(){
 
-        x = 100;
-        y = 100;
+        x = 50;
+        y = 403;
         speed = 4;
-        direction = "x"; // First Animation shown
+        direction = "down"; // First Animation shown
     }
+
 
     public void update() {
 
@@ -131,5 +137,5 @@ public class Player extends Entity{
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize,null);
 
     }
- // https://www.youtube.com/watch?v=ugzxCcpoSdE
+ // https://www.youtube.com/watch?v=ugzxCcpoSdE 9:11
 }
