@@ -13,10 +13,10 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3;
 
     public final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol; // 1680 pixel
-    final int screenHeight = tileSize * maxScreenRow; // 1056 pixel
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = tileSize * maxScreenCol; // 1680 pixel
+    public final int screenHeight = tileSize * maxScreenRow; // 1056 pixel
 
     int FPS = 60;
     TileManager tileM = new TileManager(this);
@@ -100,8 +100,8 @@ public class GamePanel extends JPanel implements Runnable{
 //        g3.fillRect(0,450,1000,120);
 
 
-        g4.setColor(Color.cyan);
-        g4.fillOval(400,50,100,tileSize);
+//        g4.setColor(Color.cyan);
+//        g4.fillOval(400,50,100,tileSize);
 
 
 

@@ -14,10 +14,17 @@ public class Player extends Entity{
 
     GamePanel gp;
     Movement move;
+    public int screenX;
+
+    public int screenY;
 
     public Player(GamePanel gp, Movement m){
         this.gp = gp;
         move = m;
+
+
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
         setDefaultValues();
         getPlayerImage();
@@ -45,8 +52,8 @@ public class Player extends Entity{
 
     public void setDefaultValues(){
 
-        x = 50;
-        y = 403;
+        worldX = 50;
+        worldY = 403;
         speed = 4;
         direction = "down"; // First Animation shown
     }
@@ -58,23 +65,23 @@ public class Player extends Entity{
             if (move.upPressed){
                 // NEED TO BE CHANGE TO JUMP
                 direction = "up";
-                y -= speed;
+                worldY -= speed;
             }
-            else if (move.downPressed) {
+            else if (move.downPressed  ) {
                 // NEED TO BE CHANGE TO DUCK
                 direction = "down";
-                y += speed;
+                worldY += speed;
             }
             else if (move.rightPressed) {
 
                 direction = "right";
-                x += speed;
+                worldX += speed;
 
             }
             else if (move.leftPressed){
 
                 direction = "left";
-                x -= speed;
+                worldX -= speed;
             }
 
             spriteCounter++;
@@ -134,7 +141,7 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize,null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize,null);
 
     }
  // https://www.youtube.com/watch?v=ugzxCcpoSdE 9:11
