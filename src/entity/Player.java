@@ -14,17 +14,17 @@ public class Player extends Entity{
 
     GamePanel gp;
     Movement move;
-    public int screenX;
+    public final int SCREENX;
 
-    public int screenY;
+    public final int SCREENY;
 
     public Player(GamePanel gp, Movement m){
         this.gp = gp;
         move = m;
 
 
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        SCREENX = gp.screenWidth/2 - (gp.tileSize/2);
+        SCREENY = gp.screenHeight/2 - (gp.tileSize/2);
 
         setDefaultValues();
         getPlayerImage();
@@ -53,8 +53,8 @@ public class Player extends Entity{
     public void setDefaultValues(){
 
         worldX = 50;
-        worldY = 403;
-        speed = 4;
+        worldY = 1000;
+        speed = 8;
         direction = "down"; // First Animation shown
     }
 
@@ -141,7 +141,7 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize,null);
+        g2.drawImage(image, SCREENX, SCREENY, gp.tileSize, gp.tileSize,null);
 
     }
  // https://www.youtube.com/watch?v=ugzxCcpoSdE 9:11

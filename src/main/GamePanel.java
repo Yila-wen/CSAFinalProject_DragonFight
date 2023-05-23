@@ -14,16 +14,21 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
+    public final int maxScreenRow = 14;
     public final int screenWidth = tileSize * maxScreenCol; // 1680 pixel
     public final int screenHeight = tileSize * maxScreenRow; // 1056 pixel
+
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 46;
+    public final int worldWidth = tileSize * maxScreenCol;
+    public final int worldHeight = tileSize * maxScreenRow;
 
     int FPS = 60;
     TileManager tileM = new TileManager(this);
     Movement move = new Movement();
     // Thread keeps the program running until we stop it
     Thread gameThread;
-    Player player = new Player(this,move);
+    public Player player = new Player(this,move);
 
 
 
@@ -68,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
             //Checks FPS
             if (timer >= 1000000000){
-                System.out.println("FPS: "+drawCount);
+                //System.out.println("FPS: "+drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -87,28 +92,14 @@ public class GamePanel extends JPanel implements Runnable{
 
         super.paintComponent(g);
 
-        Graphics2D g4 = (Graphics2D)g;
-        Graphics2D g3 = (Graphics2D)g;
-
-
         Graphics2D g2 = (Graphics2D)g;
 
         tileM.draw(g2);
         player.draw(g2);
 
-//        g3.setColor(Color.lightGray);
-//        g3.fillRect(0,450,1000,120);
-
-
-//        g4.setColor(Color.cyan);
-//        g4.fillOval(400,50,100,tileSize);
-
-
-
 
         g2.dispose();
-//        g3.dispose();
-//        g4.dispose();
+
 
     }
 
