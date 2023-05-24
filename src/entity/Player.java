@@ -52,22 +52,34 @@ public class Player extends Entity{
 
     public void setDefaultValues(){
 
-        worldX = 50;
-        worldY = 1000;
+        worldX = gp.tileSize*7;
+        worldY = gp.tileSize*40;
         speed = 8;
         direction = "down"; // First Animation shown
     }
 
 
     public void update() {
+        int floorHeight = gp.tileSize * 41;
+        int jumpStrength = 24;
+        int weight = 4;
 
+        // JUMP WIP
         if(move.upPressed || move.downPressed || move.leftPressed || move.rightPressed){
-            if (move.upPressed){
+            if (move.upPressed && worldY <= floorHeight){
                 // NEED TO BE CHANGE TO JUMP
+
+                jumpStrength = 12;
+                worldY -= jumpStrength;
+                jumpStrength -= weight;
+
+
+                if (worldY >= floorHeight) {worldY = floorHeight;} // Ensure the player does not fall through the floor
+
                 direction = "up";
-                worldY -= speed;
+
             }
-            else if (move.downPressed  ) {
+            else if (move.downPressed ) {
                 // NEED TO BE CHANGE TO DUCK
                 direction = "down";
                 worldY += speed;

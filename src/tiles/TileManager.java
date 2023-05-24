@@ -13,7 +13,7 @@ import java.util.Objects;
 public class TileManager {
     GamePanel gp;
     Tile[] tile;
-    int mapTileNum[][];
+    int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
 
@@ -29,10 +29,12 @@ public class TileManager {
         try{
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/GrassTile.png")));
+            tile[0].collision = true;
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/DirtTile.png")));
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/StoneTile.png")));
+            tile[2].collision = true;
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/SkyTile.png")));
         }catch (IOException e){
@@ -90,7 +92,7 @@ public class TileManager {
 
             col++;
 
-            if(col == gp.maxScreenCol){
+            if(col == gp.maxWorldCol){
                 col =0;
                 row++;
             }
