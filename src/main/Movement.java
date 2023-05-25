@@ -1,5 +1,7 @@
 package main;
 
+import entity.Player;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -16,7 +18,7 @@ public class Movement implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         int code = e.getKeyCode(); // returns the number of the key pressed ex A = 65
-        if (code == KeyEvent.VK_W){
+        if (code == KeyEvent.VK_SPACE){
             upPressed = true;
         }
         if (code == KeyEvent.VK_A){

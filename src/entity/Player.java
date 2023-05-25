@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
-import javax.imageio.ImageIO;
 
 public class Player extends Entity{
 
@@ -17,14 +16,17 @@ public class Player extends Entity{
     public final int SCREENX;
 
     public final int SCREENY;
+    public static boolean jump;
+    public final int FLOORHEIGHT;
+    private float jumpStrength, weight;
 
     public Player(GamePanel gp, Movement m){
         this.gp = gp;
         move = m;
 
-
         SCREENX = gp.screenWidth/2 - (gp.tileSize/2);
         SCREENY = gp.screenHeight/2 - (gp.tileSize/2);
+        FLOORHEIGHT = gp.tileSize*40;
 
         setDefaultValues();
         getPlayerImage();
@@ -56,30 +58,40 @@ public class Player extends Entity{
         worldY = gp.tileSize*40;
         speed = 8;
         direction = "down"; // First Animation shown
+        jump = false;
+        weight = 3;
+
     }
 
 
     public void update() {
-        int floorHeight = gp.tileSize * 41;
-        int jumpStrength = 24;
-        int weight = 4;
 
         // JUMP WIP
-        if(move.upPressed || move.downPressed || move.leftPressed || move.rightPressed){
-            if (move.upPressed && worldY <= floorHeight){
-                // NEED TO BE CHANGE TO JUMP
 
-                jumpStrength = 12;
+        if (move.upPressed && worldY >= FLOORHEIGHT){
+            if (!jump){jumpStrength = 24;}
+            direction = "up";
+
+            new Thread(new jping()).start();
+            worldY -= jumpStrength;
+            jumpStrength -= weight;
+            System.out.println(jumpStrength);
+
+            if (worldY >= FLOORHEIGHT){worldY = FLOORHEIGHT;}
+
+        if(move.upPressed || move.downPressed || move.leftPressed || move.rightPressed){
+
+            if (move.upPressed && worldY >= FLOORHEIGHT){
+                direction = "up";
+                jumpStrength = 24;
                 worldY -= jumpStrength;
                 jumpStrength -= weight;
 
+                new Thread(new jping()).start();
 
-                if (worldY >= floorHeight) {worldY = floorHeight;} // Ensure the player does not fall through the floor
-
-                direction = "up";
-
+                if (worldY >= FLOORHEIGHT){worldY = FLOORHEIGHT;}
             }
-            else if (move.downPressed ) {
+            else if (move.downPressed) {
                 // NEED TO BE CHANGE TO DUCK
                 direction = "down";
                 worldY += speed;
@@ -106,6 +118,7 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
             }
+        }
         }
 
 
@@ -157,4 +170,26 @@ public class Player extends Entity{
 
     }
  // https://www.youtube.com/watch?v=ugzxCcpoSdE 9:11
+
+    public static class jping implements Runnable {
+
+        @Override
+        public void run() {
+            long jumpTime = 200;
+            try {
+                Thread.sleep(jumpTime);
+                entity.Player.jump = false;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Thread(this).start();
+                System.exit(0);
+            }
+
+
+
+
+
+        }
+    }
 }
