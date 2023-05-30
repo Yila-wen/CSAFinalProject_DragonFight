@@ -1,5 +1,6 @@
 package main;
 
+import entity.Dragon;
 import entity.Player;
 import tiles.TileManager;
 
@@ -29,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
     // Thread keeps the program running until we stop it
     Thread gameThread;
     public Player player = new Player(this,input);
+    public Dragon dragon = new Dragon(this);
     public Pause pause = new Pause(this);
 
 
@@ -95,8 +97,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
 
         if (gameState == playState ){
-            System.out.println("PLAY");
-        player.update();}
+        player.update();
+        dragon.update();}
         else if (gameState == pauseState){
 
 
@@ -110,6 +112,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         tileM.draw(g2);
         player.draw(g2);
+        int psx = player.SCREENX;
+        int psy = player.SCREENY;
+        if (player.worldX+psx >=  dragon.worldX  && player.worldY+psx >= dragon.worldY){
+        dragon.draw(g2,dragon.worldX-player.worldX,dragon.worldY-player.worldY);
+        }
         pause.draw(g2);
 
 
