@@ -3,105 +3,124 @@ package entity;
 import main.GamePanel;
 import main.Controls;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Player extends Entity{
 
-    GamePanel gp;
     Controls input;
     public final int SCREENX;
 
     public final int SCREENY;
-    public static boolean jump;
-    public final int FLOORHEIGHT;
+    public  boolean jump;
+    public boolean jDown;
+
     private float jumpStrength, weight;
+    public HealthBar playerHP;
 
     public Player(GamePanel gp, Controls m){
-        this.gp = gp;
+        super(gp);
         input = m;
 
         SCREENX = gp.screenWidth/2 - (gp.tileSize/2);
         SCREENY = gp.screenHeight/2 - (gp.tileSize/2);
-        FLOORHEIGHT = gp.tileSize*40;
+
+
+        hitbox = new Rectangle(16,16,gp.tileSize,gp.tileSize-(gp.tileSize/8));
+        hitboxDefaultX = 16;
+        hitboxDefaultY = 16;
 
         setDefaultValues();
         getPlayerImage();
     }
     public void getPlayerImage(){
-        try {
-
-            // Change to IMAGE
-
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
-            up2 =ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
-            down1 =ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
-            down2=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
-            left1=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
-            left2=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
-            right1=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
-            right2=ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
+            up1 = setup("/player/jump1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            up2 =setup("/player/jump2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            down1 =setup("/player/protect1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            down2=setup("/player/protect2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            left1=setup("/player/lRun1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            left2=setup("/player/lRun2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            right1=setup("/player/rRun1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            right2=setup("/player/rRun2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
+            attack1 = setup("/player/attack1",gp.tileSize+(gp.tileSize/2),gp.tileSize+(gp.tileSize/4));
+            attack2 = setup("/player/attack2",gp.tileSize+(gp.tileSize/2),gp.tileSize+(gp.tileSize/4));
             // This is calling the image from the player file ex package/filename
 
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
     }
 
     public void setDefaultValues(){
 
-        worldX = gp.tileSize*7;
-        worldY = gp.tileSize*40;
-        speed = 8;
-        direction = "down"; // First Animation shown
+        worldX = gp.tileSize*8;
+        worldY = (gp.tileSize*19)-(gp.tileSize/4);
+        speed = 20;
+        direction = "right"; // First Animation shown
+        playerHP = new HealthBar(gp.tileSize/2,gp.tileSize/2,150,25,100);
+
+
         jump = false;
-        weight = 3;
+        jDown = false;
+        jumpStrength = 25;
+        weight = 5;
 
     }
 
 
     public void update() {
+        if (playerHP.getCurrentHealth() != 0){
 
-        // JUMP WIP
-
-//        if (input.upPressed && worldY >= FLOORHEIGHT){
-//            if (!jump){jumpStrength = 24;}
-//            direction = "up";
-//
-//            new Thread(new jping()).start();
-//            worldY -= jumpStrength;
-//            jumpStrength -= weight;
-//            System.out.println(jumpStrength);
-//
-//            if (worldY >= FLOORHEIGHT){worldY = FLOORHEIGHT;}
-
-        if(input.upPressed || input.downPressed || input.leftPressed || input.rightPressed){
-
-            if (input.upPressed ){
-                direction = "up";
-
-                worldY -= speed;
-
+        if (input.attackPressed && !attacking){
+            attacking = true;
+        }
+        else if (attacking){
+            attackAni();
+        }
+        else if (input.upPressed && !jump){
+            jump = true;
+            spriteCounter = 0;
+            spriteNum = 1;
+        }
+        else if (jump){
+            jumpAni();
+        }
+        else if (!jump && worldY< ((gp.tileSize*19)-gp.tileSize/4)){
+            jDown = true;
+            worldY+= 8;
+            if (worldY >= ((gp.tileSize*19)-gp.tileSize/4)){
+                worldY = ((gp.tileSize*19)-gp.tileSize/4);
+                jDown = false;
             }
-            else if (input.downPressed) {
+        }
+
+        else if( input.downPressed || input.leftPressed || input.rightPressed|| input.heal){
+            if (input.downPressed) {
                 // NEED TO BE CHANGE TO DUCK
                 direction = "down";
-                worldY += speed;
             }
             else if (input.rightPressed) {
 
                 direction = "right";
-                worldX += speed;
-
             }
-            else if (input.leftPressed){
+            else if (input.leftPressed) {
 
                 direction = "left";
-                worldX -= speed;
+            } else if (input.heal) {
+                direction = "heal";
+
+            }
+
+            collisionOn = false;
+            gp.cc.checkTile(this);
+
+            boolean entityCollided = gp.cc.checkEntity(this,gp.dragon);
+            dragonInteraction(entityCollided);
+
+            if (!collisionOn){
+                switch (direction) {
+                    case "down" -> worldY += speed;
+                    case "left" -> worldX -= speed;
+                    case "right" -> worldX += speed;
+                    case "heal" -> System.out.println( playerHP.changeCurrentHealth(5,"+"));
+                }
             }
 
             spriteCounter++;
@@ -115,6 +134,63 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
+        if (iframes){
+            iframesCounter++;
+            if (iframesCounter > 60){
+                iframes = false;
+                iframesCounter = 0;
+            }
+        }
+
+        }
+        else gp.gameState = gp.DEAD_STATE;
+
+    }
+
+        public void attackAni(){
+         spriteCounter++;
+         if (spriteCounter <= 5){
+             spriteNum = 1;
+         }
+         if (spriteCounter >5 && spriteCounter <= 25){
+             spriteNum = 2;
+         }
+         if (spriteCounter >25){
+             spriteNum = 1;
+             spriteCounter = 0;
+             attacking = false;
+         }
+
+        }
+
+        public void jumpAni(){
+        spriteCounter++;
+            if (spriteCounter <= 6){
+                System.out.println(jumpStrength);
+                spriteNum = 1;
+                worldY-=jumpStrength;
+                jumpStrength-=weight;
+
+            }
+            if (spriteCounter == 7){
+                jumpStrength = 0;
+            }
+            if (spriteCounter >8 && spriteCounter <= 14){
+                System.out.println(jumpStrength);
+                spriteNum = 2;
+                jumpStrength -= weight;
+                worldY += jumpStrength;
+
+            }
+            if (spriteCounter >=15){
+                spriteNum = 1;
+                spriteCounter = 0;
+                jumpStrength = 25;
+                jump = false;
+
+            }
+
+
         }
 
 
@@ -126,64 +202,60 @@ public class Player extends Entity{
 
         BufferedImage image = null;
 
-        switch(direction) {
-            case "up":
-                if (spriteNum ==1){
-                    image = up1;
-                }
-                if (spriteNum == 2){
-                    image = up2;
-                }
-                break;
-            case "down":
-                if (spriteNum ==1){
+        if (!attacking){
+            if (jump){
+                if (spriteNum == 1){image = up1;}
+                if (spriteNum == 2){image = up2;}
+            }
+            if (jDown){
+                image = up2;
+            }
+            else
+        switch (direction) {
+            case "down" -> {
+                if (spriteNum == 1) {
                     image = down1;
                 }
-                if (spriteNum == 2){
+                if (spriteNum == 2) {
                     image = down2;
                 }
-                break;
-            case "left":
-                if (spriteNum ==1){
+            }
+            case "left" -> {
+                if (spriteNum == 1) {
                     image = left1;
                 }
-                if (spriteNum == 2){
+                if (spriteNum == 2) {
                     image = left2;
                 }
-                break;
-            case "right":
-                if (spriteNum ==1){
+            }
+            case "right" -> {
+                if (spriteNum == 1) {
                     image = right1;
                 }
-                if (spriteNum == 2){
+                if (spriteNum == 2) {
                     image = right2;
                 }
-                break;
+            }
+
         }
-        g2.drawImage(image, SCREENX, SCREENY, gp.tileSize, gp.tileSize,null);
+        }
+        else if (attacking){
+            if (spriteNum == 1){image = attack1;}
+            if (spriteNum == 2){image = attack2;}
+        }
+        g2.drawImage(image, SCREENX, SCREENY,null);
 
     }
- // https://www.youtube.com/watch?v=ugzxCcpoSdE 9:11
 
-//    public static class jping implements Runnable {
-//
-//        @Override
-//        public void run() {
-//            long jumpTime = 200;
-//            try {
-//                Thread.sleep(jumpTime);
-//                entity.Player.jump = false;
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                new Thread(this).start();
-//                System.exit(0);``
-//            }
-//
-//
-//
-//
-//
-//        }
-//    }
+    public void dragonInteraction(boolean x){
+
+        if (x){
+            if (!iframes){
+            playerHP.changeCurrentHealth(25,"-");
+            iframes = true;
+        }
+        }
+
+    }
+
 }

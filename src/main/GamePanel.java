@@ -1,17 +1,18 @@
 package main;
 
-import entity.Dragon;
+import entity.Entity;
 import entity.Player;
 import tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class GamePanel extends JPanel implements Runnable{
 
     // SCREEN SETTINGS
     final int originalTileSize = 16;
-    final int scale = 3;
+    final int scale = 4;
 
     public final int tileSize = originalTileSize * scale;
     public final int maxScreenCol = 16;
@@ -19,8 +20,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixel
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixel
 
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 46;
+    public final int maxWorldCol = 52;
+    public final int maxWorldRow = 26;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -29,14 +30,21 @@ public class GamePanel extends JPanel implements Runnable{
     Controls input = new Controls(this);
     // Thread keeps the program running until we stop it
     Thread gameThread;
+    AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this,input);
-    public Dragon dragon = new Dragon(this);
-    public Pause pause = new Pause(this);
+    //  public Dragon dragon = new Dragon(this);
+    // MAYBE USE^
+    public Entity[] dragon = new Entity[1];
+    public Display ui = new Display(this);
+    public EventHandler eHandler = new EventHandler(this);
 
 
     public int gameState;
-    public final int playState = 1;
-    public final int pauseState = 0;
+    public final int TITLE_STATE = 0;
+    public final int PLAY_STATE = 1;
+    public final int PAUSE_STATE = 2;
+    public final int DEAD_STATE = 3;
+    public CollisionChecker cc = new CollisionChecker(this);
 
 
     public GamePanel(){
@@ -47,8 +55,12 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(input);
         this.setFocusable(true);
 
-        //Needs to be moved
-        gameState = playState;
+
+    }
+
+    public void setUpGame(){
+        aSetter.setDragon();
+        gameState = TITLE_STATE;
     }
 
     public void startGameThread(){
@@ -96,32 +108,82 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        if (gameState == playState ){
+        if (gameState == PLAY_STATE ){
         player.update();
-        dragon.update();}
-        else if (gameState == pauseState){
+        dragon[0].update();
+
+        }
+        else if (gameState == PAUSE_STATE){
+
+
+        }
+        else if (gameState == DEAD_STATE){
 
 
         }
     }
     public void paintComponent(Graphics g){
-
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D)g;
 
-        tileM.draw(g2);
-        player.draw(g2);
-        int psx = player.SCREENX;
-        int psy = player.SCREENY;
-        if (player.worldX+psx >=  dragon.worldX  && player.worldY+psx >= dragon.worldY){
-        dragon.draw(g2,dragon.worldX-player.worldX,dragon.worldY-player.worldY);
+        if (gameState == TITLE_STATE){
+            ui.draw(g2);
         }
-        pause.draw(g2);
+        else {
+            tileM.draw(g2);
+
+            dragon[0].draw(g2);
+
+            player.draw(g2);
+//            if (dragon[0] != null){
+//                dragon[0].draw(g2);
+//            }
+
+            ui.draw(g2);
+
+        }
 
 
         g2.dispose();
 
+
+    }
+
+    public void saveData(){
+
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/SavedGame.txt"));
+            bw.write(""+player.playerHP.getCurrentHealth());
+            bw.newLine();
+            bw.write(""+player.worldX);
+            bw.newLine();
+            bw.write(""+player.worldY);
+            bw.newLine();
+            bw.write(""+player.direction);
+
+            bw.close();
+
+
+        }catch (IOException e){
+
+        }
+    }
+
+    public void loadData(){
+
+        try{
+            BufferedReader br = new BufferedReader(new FileReader("src/main/SavedGame.txt"));
+            player.playerHP.setCurrentHealth(Integer.parseInt(br.readLine()));
+            player.worldX = Integer.parseInt(br.readLine());
+            player.worldY = Integer.parseInt(br.readLine());
+            player.direction = br.readLine();
+
+            br.close();
+
+
+        }catch (IOException e){
+
+        }
 
     }
 

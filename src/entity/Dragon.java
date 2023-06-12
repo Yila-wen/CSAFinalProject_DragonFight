@@ -1,6 +1,5 @@
 package entity;
 
-import main.Controls;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -8,90 +7,79 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public class Dragon extends Entity{
-
-    GamePanel gp;
-
     public int speed;
-
-
-
+    public HealthBar dragonHP;
 
 
     public Dragon(GamePanel gp){
-        this.gp = gp;
+        super(gp);
 
-
-
-
+        type = 1;
 
         setDragonDefaultValues();
-        getDragonPlayerImage();
+        getDragonImage();
+
     }
 
     public void setDragonDefaultValues(){
-        worldX = (gp.tileSize * gp.maxWorldCol)- (gp.tileSize*4);
-        worldY = (gp.tileSize * 40);
+        speed = 8;
+        direction = "down";
+        dragonHP = new HealthBar(0,0,0,0,250);
+        hitbox = new Rectangle(gp.tileSize*2+32,gp.tileSize,gp.tileSize*2,gp.tileSize*2 + gp.tileSize/2);
+        hitboxDefaultX = gp.tileSize*2+32;
+        hitboxDefaultY = gp.tileSize;
 
+    }
+
+    public void getDragonImage() {
+        down1 = setup("/dragon/down1",gp.tileSize*10,gp.tileSize*10);
+        down2 = setup("/dragon/down2",gp.tileSize*10,gp.tileSize*10);
+        up1 = setup("/dragon/up1",gp.tileSize*10,gp.tileSize*10);
+        up2 = setup("/dragon/up2",gp.tileSize*10,gp.tileSize*10);
+        left1 = setup("/dragon/walk1",gp.tileSize*10,gp.tileSize*10);
+        left2 = setup("/dragon/walk2",gp.tileSize*10,gp.tileSize*10);
+        right1 = setup("/dragon/down1",gp.tileSize*10,gp.tileSize*10);
+        right2 = setup("/dragon/down2",gp.tileSize*10,gp.tileSize*10);
+        attack1 = setup("/dragon/attack1",gp.tileSize*10,gp.tileSize*10);
+        attack2= setup("/dragon/attack2",gp.tileSize*10,gp.tileSize*10);
 
 
     }
 
-    public void getDragonPlayerImage(){
-        try {
+    public void setAction(){
 
-            // Change to DRAGON IMAGE
+        actionCounter ++;
 
-            dIdle1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/dragon/DIdle1.png")));
-            dIdle2 =ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/dragon/DIdle2.png")));
+        if (actionCounter == 54) {
 
-            // This is calling the image from the player file ex package/filename
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
+
+            if (i <= 8) {
+                direction = "up";
+            }
+            if (i > 8 && i <= 28) {
+                direction = "down";
+            }
+            if (i > 28 && i <= 38) {
+                direction = "left";
+            }
+            if (i > 38 && i <= 54) {
+                direction = "right";
+            }
+
+            actionCounter = 0;
 
 
-        }catch(IOException e){
-            e.printStackTrace();
         }
 
 
 
-
     }
-    public void update() {
 
-
-
-                spriteCounter++;
-                if(spriteCounter > 12){
-                    if(spriteNum == 1){
-                        spriteNum = 2;
-                    }
-                    else if (spriteNum == 2){
-                        spriteNum = 1;
-                    }
-                    spriteCounter = 0;
-                }
-            }
-
-    public void draw(Graphics2D g2,int x,int y){
-
-
-
-
-        BufferedImage image = null;
-
-                if (spriteNum ==1){
-                    image = dIdle1;
-
-                }
-                if (spriteNum == 2){
-                    image = dIdle2;
-
-                }
-
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize,null);
-
-    }
 
 
     }

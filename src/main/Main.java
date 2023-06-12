@@ -15,6 +15,8 @@ public class Main {
         window.pack(); // Loads the preferred Dimensions
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+        gamePanel.setUpGame();
         gamePanel.startGameThread();
+
     }
 }

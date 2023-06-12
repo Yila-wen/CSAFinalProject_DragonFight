@@ -12,8 +12,8 @@ import java.util.Objects;
 
 public class TileManager {
     GamePanel gp;
-    Tile[] tile;
-    int[][] mapTileNum;
+    public Tile[] tile;
+    public int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
 
@@ -26,22 +26,26 @@ public class TileManager {
         loadMap();
     }
         public void getTileImage(){
-        try{
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/GrassTile.png")));
-            tile[0].collision = true;
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/DirtTile.png")));
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/StoneTile.png")));
-            tile[2].collision = true;
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/SkyTile.png")));
+            setup(0,"GrassTile",true);
+            setup(1,"DirtTile",true);
+            setup(2,"StoneTile",true);
+            setup(3,"SkyTile",false);
+            setup(4,"PurpleTile",true);
 
-        }catch (IOException e){
-            e.printStackTrace();
         }
+
+        public void setup(int index,String imagePath,boolean collision){
+
+        Scaler scale =new Scaler();
+
+        try {
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/"+imagePath+".png")));
+            tile[index].image = scale.scaleImage(tile[index].image,gp.tileSize,gp.tileSize);
+            tile[index].collision = collision;
+        }catch (IOException e){e.printStackTrace();}
         }
+
         public void loadMap(){
 
         try {
