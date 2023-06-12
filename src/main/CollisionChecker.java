@@ -17,16 +17,16 @@ public class CollisionChecker {
         int hitboxTopWorldY = e.worldY + e.hitbox.y;
         int hitboxBotWorldY = e.worldY + e.hitbox.y+e.hitbox.height;
 
-        int hitboxLeftCol = hitboxLeftWorldX/gp.tileSize;
-        int hitboxRightCol = hitboxRightWorldX/gp.tileSize;
-        int hitboxTopRow = hitboxTopWorldY/gp.tileSize;
-        int hitboxBotRow = hitboxBotWorldY/gp.tileSize;
+        int hitboxLeftCol = hitboxLeftWorldX/gp.TILE_SIZE;
+        int hitboxRightCol = hitboxRightWorldX/gp.TILE_SIZE;
+        int hitboxTopRow = hitboxTopWorldY/gp.TILE_SIZE;
+        int hitboxBotRow = hitboxBotWorldY/gp.TILE_SIZE;
 
         int tileNum1, tileNum2;
 
         switch (e.direction){
             case "up":
-                hitboxTopRow = (hitboxTopWorldY - e.speed)/gp.tileSize;
+                hitboxTopRow = (hitboxTopWorldY - e.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[hitboxTopRow][hitboxLeftCol];
                 tileNum2 = gp.tileM.mapTileNum[hitboxTopRow][hitboxRightCol];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
@@ -34,7 +34,7 @@ public class CollisionChecker {
                 }
                 break;
             case "down":
-                hitboxBotRow = (hitboxBotWorldY + e.speed)/gp.tileSize;
+                hitboxBotRow = (hitboxBotWorldY + e.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[hitboxBotRow][hitboxLeftCol];
                 tileNum2 = gp.tileM.mapTileNum[hitboxBotRow][hitboxRightCol];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
@@ -42,7 +42,7 @@ public class CollisionChecker {
                 }
             break;
             case "left":
-                hitboxLeftCol = (hitboxLeftWorldX - e.speed)/gp.tileSize;
+                hitboxLeftCol = (hitboxLeftWorldX - e.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[hitboxTopRow][hitboxLeftCol];
                 tileNum2 = gp.tileM.mapTileNum[hitboxBotRow][hitboxLeftCol];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
@@ -50,7 +50,7 @@ public class CollisionChecker {
                 }
             break;
             case "right":
-                hitboxRightCol = (hitboxRightWorldX + e.speed)/gp.tileSize;
+                hitboxRightCol = (hitboxRightWorldX + e.speed)/gp.TILE_SIZE;
                 tileNum1 = gp.tileM.mapTileNum[hitboxTopRow][hitboxRightCol];
                 tileNum2 = gp.tileM.mapTileNum[hitboxBotRow][hitboxRightCol];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){

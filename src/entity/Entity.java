@@ -1,6 +1,5 @@
 package entity;
 
-import main.CollisionChecker;
 import main.GamePanel;
 import tiles.Scaler;
 
@@ -48,10 +47,10 @@ public class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.SCREENX;
         int screenY = worldY - gp.player.worldY + gp.player.SCREENY;
 
-        if (worldX + gp.tileSize > gp.player.worldX - gp.player.SCREENX &&
-                worldX - gp.tileSize < gp.player.worldX + gp.player.SCREENX &&
-                worldY + gp.tileSize > gp.player.worldY - gp.player.SCREENY &&
-                worldY - gp.tileSize < gp.player.worldY + gp.player.SCREENY){
+        if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.SCREENX &&
+                worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.SCREENX &&
+                worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.SCREENY &&
+                worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.SCREENY){
 
             switch (direction) {
                 case "up" -> {
@@ -90,7 +89,7 @@ public class Entity {
             }
 
 
-            g2.drawImage(image,screenX,screenY,gp.tileSize*5,gp.tileSize*5,null);
+            g2.drawImage(image,screenX,screenY,gp.TILE_SIZE *5,gp.TILE_SIZE *5,null);
         }
 
     }

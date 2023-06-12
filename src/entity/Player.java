@@ -12,7 +12,7 @@ public class Player extends Entity{
     public final int SCREENX;
 
     public final int SCREENY;
-    public  boolean jump;
+    public boolean jump;
     public boolean jDown;
 
     private float jumpStrength, weight;
@@ -22,11 +22,11 @@ public class Player extends Entity{
         super(gp);
         input = m;
 
-        SCREENX = gp.screenWidth/2 - (gp.tileSize/2);
-        SCREENY = gp.screenHeight/2 - (gp.tileSize/2);
+        SCREENX = gp.SCREEN_WIDTH /2 - (gp.TILE_SIZE /2);
+        SCREENY = gp.SCREEN_HEIGHT /2 - (gp.TILE_SIZE /2);
 
 
-        hitbox = new Rectangle(16,16,gp.tileSize,gp.tileSize-(gp.tileSize/8));
+        hitbox = new Rectangle(16,16,gp.TILE_SIZE,gp.TILE_SIZE -(gp.TILE_SIZE /8));
         hitboxDefaultX = 16;
         hitboxDefaultY = 16;
 
@@ -34,27 +34,27 @@ public class Player extends Entity{
         getPlayerImage();
     }
     public void getPlayerImage(){
-            up1 = setup("/player/jump1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            up2 =setup("/player/jump2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            down1 =setup("/player/protect1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            down2=setup("/player/protect2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            left1=setup("/player/lRun1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            left2=setup("/player/lRun2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            right1=setup("/player/rRun1",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            right2=setup("/player/rRun2",gp.tileSize+(gp.tileSize/4),gp.tileSize+(gp.tileSize/4));
-            attack1 = setup("/player/attack1",gp.tileSize+(gp.tileSize/2),gp.tileSize+(gp.tileSize/4));
-            attack2 = setup("/player/attack2",gp.tileSize+(gp.tileSize/2),gp.tileSize+(gp.tileSize/4));
+            up1 = setup("/player/jump1",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            up2 =setup("/player/jump2",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            down1 =setup("/player/protect1",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            down2=setup("/player/protect2",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            left1=setup("/player/lRun1",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            left2=setup("/player/lRun2",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            right1=setup("/player/rRun1",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            right2=setup("/player/rRun2",gp.TILE_SIZE +(gp.TILE_SIZE /4),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            attack1 = setup("/player/attack1",gp.TILE_SIZE +(gp.TILE_SIZE /2),gp.TILE_SIZE +(gp.TILE_SIZE /4));
+            attack2 = setup("/player/attack2",gp.TILE_SIZE +(gp.TILE_SIZE /2),gp.TILE_SIZE +(gp.TILE_SIZE /4));
             // This is calling the image from the player file ex package/filename
 
     }
 
     public void setDefaultValues(){
 
-        worldX = gp.tileSize*8;
-        worldY = (gp.tileSize*19)-(gp.tileSize/4);
+        worldX = gp.TILE_SIZE *8;
+        worldY = (gp.TILE_SIZE *19)-(gp.TILE_SIZE /4);
         speed = 20;
         direction = "right"; // First Animation shown
-        playerHP = new HealthBar(gp.tileSize/2,gp.tileSize/2,150,25,100);
+        playerHP = new HealthBar(gp.TILE_SIZE /2,gp.TILE_SIZE /2,150,25,100);
 
 
         jump = false;
@@ -82,11 +82,11 @@ public class Player extends Entity{
         else if (jump){
             jumpAni();
         }
-        else if (!jump && worldY< ((gp.tileSize*19)-gp.tileSize/4)){
+        else if (!jump && worldY< ((gp.TILE_SIZE *19)-gp.TILE_SIZE /4)){
             jDown = true;
             worldY+= 8;
-            if (worldY >= ((gp.tileSize*19)-gp.tileSize/4)){
-                worldY = ((gp.tileSize*19)-gp.tileSize/4);
+            if (worldY >= ((gp.TILE_SIZE *19)-gp.TILE_SIZE /4)){
+                worldY = ((gp.TILE_SIZE *19)-gp.TILE_SIZE /4);
                 jDown = false;
             }
         }

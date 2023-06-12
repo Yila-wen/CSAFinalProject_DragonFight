@@ -11,19 +11,19 @@ import java.io.*;
 public class GamePanel extends JPanel implements Runnable{
 
     // SCREEN SETTINGS
-    final int originalTileSize = 16;
-    final int scale = 4;
+    final int ORIGINAL_TILE_SIZE = 16;
+    final int SCALE = 4;
 
-    public final int tileSize = originalTileSize * scale;
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixel
-    public final int screenHeight = tileSize * maxScreenRow; // 576 pixel
+    public final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE;
+    public final int MAX_SCREEN_COL = 16;
+    public final int MAX_SCREEN_ROW = 12;
+    public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL; // 768 pixel
+    public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW; // 576 pixel
 
-    public final int maxWorldCol = 52;
-    public final int maxWorldRow = 26;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
+    public final int MAX_WORLD_COL = 52;
+    public final int MAX_WORLD_ROW = 26;
+    public final int worldWidth = TILE_SIZE * MAX_WORLD_COL;
+    public final int worldHeight = TILE_SIZE * MAX_WORLD_ROW;
 
     public final int FPS = 60;
     TileManager tileM = new TileManager(this);
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GamePanel(){
 
-        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground((Color.black));
         this.setDoubleBuffered(true);
         this.addKeyListener(input);

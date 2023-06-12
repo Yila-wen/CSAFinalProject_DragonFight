@@ -10,8 +10,8 @@ public class AssetSetter {
     }
     public void setDragon(){
         gp.dragon[0] = new Dragon(gp);
-        gp.dragon[0].worldX = gp.tileSize*44; //48
-        gp.dragon[0].worldY = gp.tileSize*16 + (gp.tileSize/8); //19
+        gp.dragon[0].worldX = gp.TILE_SIZE *44; //48
+        gp.dragon[0].worldY = gp.TILE_SIZE *16 + (gp.TILE_SIZE /8); //19
 
     }
 }

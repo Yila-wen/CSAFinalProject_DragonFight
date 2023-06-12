@@ -29,8 +29,8 @@ public class EventHandler {
 
         gp.player.hitbox.x = gp.player.worldX+gp.player.hitbox.x;
         gp.player.hitbox.y = gp.player.worldY+gp.player.hitbox.y;
-        eventRect.x = eventCol*gp.tileSize + eventRect.x;
-        eventRect.y = eventRow*gp.tileSize+eventRect.y;
+        eventRect.x = eventCol*gp.TILE_SIZE + eventRect.x;
+        eventRect.y = eventRow*gp.TILE_SIZE +eventRect.y;
 
         if (gp.player.hitbox.intersects(eventRect)){
             hit = true;

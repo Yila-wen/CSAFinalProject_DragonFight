@@ -50,8 +50,8 @@ public class Display {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
         String text = "Knigon";
         int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-        int x = (gp.screenWidth/2) - length/2;
-        int y = gp.tileSize+(gp.tileSize/2);
+        int x = (gp.SCREEN_WIDTH /2) - length/2;
+        int y = gp.TILE_SIZE +(gp.TILE_SIZE /2);
 
 
         // Title Image
@@ -67,43 +67,43 @@ public class Display {
         //Menu
         g2.setFont(g2.getFont().deriveFont(28F));
         text = "NEW GAME";
-        x = (gp.screenWidth/2)-(gp.tileSize*3)+ gp.tileSize/2;
-        y = gp.tileSize*4;
+        x = (gp.SCREEN_WIDTH /2)-(gp.TILE_SIZE *3)+ gp.TILE_SIZE /2;
+        y = gp.TILE_SIZE *4;
         g2.setColor(Color.GRAY);
         g2.drawString(text,x+5,y+5);
         g2.setColor(Color.white);
         g2.drawString(text,x,y);
         if (cmdNum == 0){
             g2.setColor(Color.black);
-            g2.drawString(">",x-(gp.tileSize/2),y);
+            g2.drawString(">",x-(gp.TILE_SIZE /2),y);
         }
 
         g2.setFont(g2.getFont().deriveFont(28F));
         g2.setColor(Color.white);
         text = "LOAD GAME";
-        x = (gp.screenWidth/2)-(gp.tileSize*3)+ gp.tileSize/2;
-        y += gp.tileSize*2;
+        x = (gp.SCREEN_WIDTH /2)-(gp.TILE_SIZE *3)+ gp.TILE_SIZE /2;
+        y += gp.TILE_SIZE *2;
         g2.setColor(Color.GRAY);
         g2.drawString(text,x+5,y+5);
         g2.setColor(Color.white);
         g2.drawString(text,x,y);
         if (cmdNum == 1){
             g2.setColor(Color.black);
-            g2.drawString(">",x-(gp.tileSize/2),y);
+            g2.drawString(">",x-(gp.TILE_SIZE /2),y);
         }
 
         g2.setFont(g2.getFont().deriveFont(28F));
         g2.setColor(Color.white);
         text = "QUIT";
-        x = (gp.screenWidth/2)-(gp.tileSize*3)+ gp.tileSize/2;
-        y += gp.tileSize*2;
+        x = (gp.SCREEN_WIDTH /2)-(gp.TILE_SIZE *3)+ gp.TILE_SIZE /2;
+        y += gp.TILE_SIZE *2;
         g2.setColor(Color.GRAY);
         g2.drawString(text,x+5,y+5);
         g2.setColor(Color.white);
         g2.drawString(text,x,y);
         if (cmdNum == 2){
             g2.setColor(Color.black);
-            g2.drawString(">",x-(gp.tileSize/2),y);
+            g2.drawString(">",x-(gp.TILE_SIZE /2),y);
         }
 
 
@@ -115,31 +115,31 @@ public class Display {
         g2.setFont(g2.getFont().deriveFont(Font.ITALIC,80F));
         String text = "PAUSED";
         int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-        int x = (gp.screenWidth/2) - length/2;
-        int y = (gp.screenHeight/3);
+        int x = (gp.SCREEN_WIDTH /2) - length/2;
+        int y = (gp.SCREEN_HEIGHT /3);
         g2.drawString(text,x,y);
 
         // Options
         g2.setFont(g2.getFont().deriveFont(28F));
         text = "SAVE GAME";
-        x = (gp.screenWidth/2)-(gp.tileSize*3)+ gp.tileSize/2;
-        y = gp.tileSize*6;
+        x = (gp.SCREEN_WIDTH /2)-(gp.TILE_SIZE *3)+ gp.TILE_SIZE /2;
+        y = gp.TILE_SIZE *6;
         g2.setColor(Color.white);
         g2.drawString(text,x+5,y+5);
         if (cmdNum == 0){
             g2.setColor(Color.black);
-            g2.drawString(">",x-(gp.tileSize/2),y);
+            g2.drawString(">",x-(gp.TILE_SIZE /2),y);
         }
         g2.setFont(g2.getFont().deriveFont(28F));
         g2.setColor(Color.white);
         text = "BACK";
-        x = (gp.screenWidth/2)-(gp.tileSize*3)+ gp.tileSize/2;
-        y += gp.tileSize*2;
+        x = (gp.SCREEN_WIDTH /2)-(gp.TILE_SIZE *3)+ gp.TILE_SIZE /2;
+        y += gp.TILE_SIZE *2;
         g2.setColor(Color.white);
         g2.drawString(text,x,y);
         if (cmdNum == 1){
             g2.setColor(Color.black);
-            g2.drawString(">",x-(gp.tileSize/2),y);
+            g2.drawString(">",x-(gp.TILE_SIZE /2),y);
         }
     }
 
@@ -149,8 +149,8 @@ public class Display {
         g2.setColor(Color.red);
         String text = "YOU DIED";
         int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-        int x = (gp.screenWidth/2) - length/2;
-        int y = (gp.screenHeight/3);
+        int x = (gp.SCREEN_WIDTH /2) - length/2;
+        int y = (gp.SCREEN_HEIGHT /3);
         g2.drawString(text,x,y);
 
 
@@ -164,7 +164,7 @@ public class Display {
 
         try {
             scaledImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/"+ location  +"/"+imageName +".png")));
-            scaledImage = scale.scaleImage(scaledImage,gp.screenWidth,gp.screenHeight); //may need to be changed to fit other criterias
+            scaledImage = scale.scaleImage(scaledImage,gp.SCREEN_WIDTH,gp.SCREEN_HEIGHT); //may need to be changed to fit other criterias
         }catch (IOException e){e.printStackTrace();}
         return scaledImage;
 

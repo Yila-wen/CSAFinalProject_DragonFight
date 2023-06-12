@@ -2,11 +2,7 @@ package entity;
 
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 import java.util.Random;
 
 public class Dragon extends Entity{
@@ -28,23 +24,23 @@ public class Dragon extends Entity{
         speed = 8;
         direction = "down";
         dragonHP = new HealthBar(0,0,0,0,250);
-        hitbox = new Rectangle(gp.tileSize*2+32,gp.tileSize,gp.tileSize*2,gp.tileSize*2 + gp.tileSize/2);
-        hitboxDefaultX = gp.tileSize*2+32;
-        hitboxDefaultY = gp.tileSize;
+        hitbox = new Rectangle(gp.TILE_SIZE *2+32,gp.TILE_SIZE,gp.TILE_SIZE *2,gp.TILE_SIZE *2 + gp.TILE_SIZE /2);
+        hitboxDefaultX = gp.TILE_SIZE *2+32;
+        hitboxDefaultY = gp.TILE_SIZE;
 
     }
 
     public void getDragonImage() {
-        down1 = setup("/dragon/down1",gp.tileSize*10,gp.tileSize*10);
-        down2 = setup("/dragon/down2",gp.tileSize*10,gp.tileSize*10);
-        up1 = setup("/dragon/up1",gp.tileSize*10,gp.tileSize*10);
-        up2 = setup("/dragon/up2",gp.tileSize*10,gp.tileSize*10);
-        left1 = setup("/dragon/walk1",gp.tileSize*10,gp.tileSize*10);
-        left2 = setup("/dragon/walk2",gp.tileSize*10,gp.tileSize*10);
-        right1 = setup("/dragon/down1",gp.tileSize*10,gp.tileSize*10);
-        right2 = setup("/dragon/down2",gp.tileSize*10,gp.tileSize*10);
-        attack1 = setup("/dragon/attack1",gp.tileSize*10,gp.tileSize*10);
-        attack2= setup("/dragon/attack2",gp.tileSize*10,gp.tileSize*10);
+        down1 = setup("/dragon/down1",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        down2 = setup("/dragon/down2",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        up1 = setup("/dragon/up1",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        up2 = setup("/dragon/up2",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        left1 = setup("/dragon/walk1",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        left2 = setup("/dragon/walk2",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        right1 = setup("/dragon/down1",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        right2 = setup("/dragon/down2",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        attack1 = setup("/dragon/attack1",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
+        attack2= setup("/dragon/attack2",gp.TILE_SIZE *10,gp.TILE_SIZE *10);
 
 
     }
